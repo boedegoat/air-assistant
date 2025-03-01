@@ -9,8 +9,6 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
 
-# TODO: 
-#       3. bikin klik kanan (rencana 3 jari) (1.5 detik)
 
 class handDetector():
     #maxHands = jangan diganti jadi dua(karena kita hanya mau track 1 saja)
@@ -153,7 +151,7 @@ class VirtualMouse(QMainWindow):
     def hand_gesture(self):
         x1, y1 = self.lmList[8][1:] #telunjuk (mengambil koordinat x dan y)
         fingers = self.detector.fingersUp(self.img, self.lmList)
-        print(fingers)
+        # print(fingers)
         if fingers[0] == 1 and fingers[2] != 1 and fingers: #jari telunjuk dan jempol
             self.click_mouse()
             self.mouse_release()#left
@@ -162,8 +160,10 @@ class VirtualMouse(QMainWindow):
             self.mouse_release()
         elif fingers and fingers[0] != 1 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 1 and fingers[4] == 1:  # 4 jari scroll bawah
             self.scroll_page("down")
+            self.mouse_release()
         elif fingers and fingers[0] == 1 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 1 and fingers[4] == 1:  # 5 jari scroll atas
             self.scroll_page("up")
+            self.mouse_release()
         elif fingers and fingers[0] != 1 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 1:
             self.click_mouse(ops="right")
             self.mouse_release()
@@ -210,22 +210,22 @@ class VirtualMouse(QMainWindow):
             length1, self.img, lineInfo = self.detector.findDistance(self.lmList,4, 8, self.img) #ujung jari telunjuk dan jempol
             length2, self.img, lineInfo = self.detector.findDistance(self.lmList,4, 7, self.img) #sendi sebelum ujung jari telunjuk dan ujung jari jempol
             length = min(length1, length2)
-            if length < 20 and time.time() - self.clicked > 0.4:
+            if length < 30 and time.time() - self.clicked > 0.4:
                 self.mouse.click(Button.left, 1)
                 self.clicked = time.time()
         elif ops == "right":
             length1, self.img, lineInfo = self.detector.findDistance(self.lmList, 8, 12, self.img) #ujung jari telunjuk dan tengah
             length2, self.img, lineInfo = self.detector.findDistance(self.lmList, 12, 16, self.img) #ujung jari tengah dan manis
-            if length1 < 30 and length2 < 30 and time.time() - self.clicked > 1:
+            if length1 < 40 and length2 < 40 and time.time() - self.clicked > 1:
                 self.mouse.click(Button.right, 1)
                 self.clicked = time.time()
     
     def scroll_page(self, direction="up"):
         if direction == "up":
-            print('scroll up')
+            # print('scroll up')
             self.mouse.scroll(0, 1)  # Scroll up
         else:
-            print('scroll down')
+            # print('scroll down')
             self.mouse.scroll(0, -1)  # Scroll down
 
 if __name__ == "__main__":
