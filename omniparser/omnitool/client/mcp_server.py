@@ -10,6 +10,7 @@ from functools import partial
 from typing import cast
 from enum import StrEnum
 import os
+import pyautogui
 from dotenv import load_dotenv
 
 from mcp.server.fastmcp import FastMCP
@@ -96,8 +97,23 @@ def _api_response_callback(response: APIResponse[BetaMessage], response_state: d
     response_state[response_id] = response
 
 @mcp.tool()
+def perform_type(text: str):
+    """
+    Types the given text on the user's device using the keyboard.
+
+    Use this tool for simple typing actions, such as entering text or filling out a form.
+    If the user's requested action only involves typing, prefer this tool over 'local_device_use', 
+    which is intended for more complex operations like mouse movements, clicks, or combined actions.
+    """
+    pyautogui.typewrite(text, interval=12/1000)
+    return f"Successfully typed: {text}"
+
+@mcp.tool()
 def local_device_use(action: str):
-    """Control user local device to perform GUI actions"""
+    """
+    Allows an AI agent to control the user's local device by performing GUI actions such as mouse movements, clicks, and keyboard input.
+    This function enables automated interaction with the user's desktop environment, making it possible for the AI to execute tasks that require direct manipulation of the graphical user interface.
+    """
     state = {
         "model": os.environ.get('MODEL'),
         "provider": "gemini",
@@ -132,5 +148,6 @@ def local_device_use(action: str):
             
     return "success"
 
-mcp.run(transport="sse")
 
+if __name__ == '__main__':
+    mcp.run()

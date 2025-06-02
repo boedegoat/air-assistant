@@ -28,8 +28,8 @@ SEND_SAMPLE_RATE = 16000
 RECEIVE_SAMPLE_RATE = 24000
 CHUNK_SIZE = 1024
 
-MODEL = "models/gemini-2.0-flash-live-001"
-# MODEL = "models/gemini-2.5-flash-preview-native-audio-dialog"
+# MODEL = "models/gemini-2.0-flash-live-001"
+MODEL = "models/gemini-2.5-flash-preview-native-audio-dialog"
 
 DEFAULT_MODE = "screen"
 
@@ -258,6 +258,7 @@ class AudioLoop:
                     continue
 
                 if tool_call := response.tool_call:
+                    print(tool_call)
                     await self.handle_tool_call(tool_call)
 
             # If you interrupt the model, it sends a turn_complete.
@@ -290,7 +291,7 @@ class AudioLoop:
         except json.JSONDecodeError:
             print("Error decoding servers_config.json. Skipping STDIO server connections.")
 
-        await self.mcp_client.connect_to_servers(stdio_configs=stdio_configs, connect_sse=True) # Connect to all configured servers
+        await self.mcp_client.connect_to_servers(stdio_configs=stdio_configs, connect_sse=False) # Connect to all configured servers
 
         all_mcp_tools = []
         if self.mcp_client.sessions:
@@ -298,7 +299,6 @@ class AudioLoop:
                 try:
                     response = await session_obj.list_tools()
                     if hasattr(response, 'tools') and response.tools:
-                        print(f"Tools from {server_name}: {[tool.name for tool in response.tools]}")
                         all_mcp_tools.extend(response.tools)
                     else:
                         print(f"No tools found for MCP server '{server_name}' or 'response.tools' is not iterable.")
@@ -405,7 +405,7 @@ class AudioLoop:
                         name=tool_name_mcp,
                         description=tool_description_mcp,
                         parameters=gemini_tool_params_schema, 
-                        # behavior='NON_BLOCKING'
+                        behavior='NON_BLOCKING'
                     )
                 )
         else:

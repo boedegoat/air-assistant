@@ -154,7 +154,7 @@ class VLMAgent:
         vlm_plan_str = ""
         for key, value in vlm_response_json.items():
             if key == "Reasoning":
-                # speak(value, rate=200)
+                speak(value, rate=180)
                 vlm_plan_str += f'{value}'
             else:
                 vlm_plan_str += f'\n{key}: {value}'

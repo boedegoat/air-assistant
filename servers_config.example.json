@@ -1,0 +1,17 @@
+{
+	"mcpServers": {
+		"filesystem": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"@modelcontextprotocol/server-filesystem",
+				"/Users/bhremadafevreano/Desktop",
+				"/Users/bhremadafevreano/Downloads"
+			]
+		},
+		"OmniParser": {
+			"command": "uv",
+			"args": ["run", "./omniparser/omnitool/client/mcp_server.py"]
+		}
+	}
+}
