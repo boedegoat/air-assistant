@@ -13,3 +13,4 @@ wheels/
 servers_config.json
 omniparser/weights
 .DS_Store
+tmp
