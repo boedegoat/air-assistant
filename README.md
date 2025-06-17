@@ -2,6 +2,8 @@
 
 Air Assistant is a versatile application designed to enhance your productivity by allowing you to ask and interact with your screen content using AI and a suite of powerful tools.
 
+[Demo Video](https://binusianorg-my.sharepoint.com/personal/bhremada_ardhi_binus_ac_id/_layouts/15/guestaccess.aspx?share=EiQ6CYwk6cNKh9NCX24LDe8Bl9rXvV30OYZSG0q9Z1wLlw)
+
 ## Features
 
 -   **Screen Interaction:** Ask questions about anything displayed on your screen.
