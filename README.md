@@ -8,6 +8,7 @@ Air Assistant is a versatile application designed to enhance your productivity b
 
 -   **Screen Interaction:** Ask questions about anything displayed on your screen.
 -   **AI Automation:** Leverage AI to automate tasks and streamline your workflow.
+-   **Virtual Mouse:** Control your cursor using hand gestures for hands-free computer interaction.
 -   **MCP Tools:** Access a variety of Model Context Protocols (MCP) tools for extended functionality.
 
 ## Tech Stack
